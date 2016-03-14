@@ -11,21 +11,16 @@ public final class ExCounter {
 			System.out.print("File error.\n");
 		}
 
-		Pattern ptrn = Pattern.compile("[a-z]{1}[a-z 0-9]+[a-z]{1}");
+		Pattern ptrn = Pattern.compile("\\s[A-Z]{1}[a-z0-9]+[a-z]{1}\\s");
 		int numberOfPairs = 0;
-		Scanner scnr = new Scanner(inputFile);
+		String text = new Scanner(inputFile).useDelimiter("\\Z").next();
+		Matcher mtchr = ptrn.matcher(text);
 
-		while (scnr.hasNextLine()) {
-			String line = scnr.nextLine();
-			Matcher mtchr = ptrn.matcher(line);
-			if (mtchr.find()) {
-				numberOfPairs++;
-				System.out.print(line + " -> Valid\n");
-			}
-			else 
-				System.out.print(line + " -> Invalid\n");
+		while (mtchr.find()) {
+			numberOfPairs++;
+			System.out.print(mtchr.group() + " -> Valid\n");
 		}
-
+		
 		System.out.print("Number of Valid Pairs: " + numberOfPairs + "\n");
 	}
 }
